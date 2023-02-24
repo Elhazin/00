@@ -1,0 +1,26 @@
+regveqtb 
+tebewfdb
+
+rtfgvb
+rtbdftv
+tfg
+
+
+tefd`< maek cat | ls > out
+
+int isexeist(node)
+{
+    while(node)
+    {
+        if (node.type == 'I')
+        {
+            return 1 ;
+        }
+        node = node->next;
+    }
+    retrun 0;
+
+}
+if ()
+
+maek I 
