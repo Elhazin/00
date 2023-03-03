@@ -149,17 +149,15 @@ void handle_here_doc(t_file *str)
 	char *ptr;
 	pipe(fd);
 	x  = fork();
-	
 	if (x == 0)
 	{
 		while (1)
 		{
-			
 			ptr = readline("> ");			
 			if (memcmp(str->name, ptr, ft_strlen(ptr) - 1) == 0)
 			{
-				dup2(fd[0], 0);
 				close(fd[1]);
+				dup2(fd[0], 0);
 				close(fd[0]);
 				exit(0);
 			}
@@ -168,7 +166,9 @@ void handle_here_doc(t_file *str)
 	}
 	close(fd[1]);
 	close(fd[0]);
+	waitpid(x, 0,0);
 }
+
 void handle_input(t_file *file)
 {
 	int fds;
@@ -181,6 +181,7 @@ void handle_input(t_file *file)
 	dup2(fds, 0);
 	close(fds);
 }
+
 void handle_append(t_file *file)
 {
 	int fds;
@@ -206,6 +207,7 @@ void	handle_output(t_file *file)
 	dup2(fds, 1);
 	close(fds);
 }
+
 int check_it(t_file *str, char type)
 {
 	while (str)
@@ -216,6 +218,7 @@ int check_it(t_file *str, char type)
 	}
 	return (0);
 }
+
 void handle_no_input(t_list *str, int **fd)
 {
 	if (check_it(str->file, 'A') == 0 || check_it(str->file, 'O') == 0)
@@ -235,12 +238,12 @@ void handle_no_input(t_list *str, int **fd)
 		}
 	}
 }
+
 void	handle_redir(t_list *str, int **fd, int i)
 {
 	t_file *file;
 	int y;
 	file = str->file;
-					fprintf(stderr,"riyqgefvhyhqrfvasq\n");
 	if (str->file != NULL)
 	{
 		while (file)
@@ -261,10 +264,7 @@ void	handle_redir(t_list *str, int **fd, int i)
 	}
 	handle_no_input(str, fd);
 }
-// char *check_path(t_list *str);
-// {
-	
-// }
+
 void execute_chile(t_list *str, int **fd, int i, int k)
 {
 	char **ptr = ft_split(str->str, ' ');
@@ -284,18 +284,17 @@ void execute_chile(t_list *str, int **fd, int i, int k)
 
 void execute(t_list *str)
 {
-	// if (ft_lstsize(str) == 1)
-	// 	execute_simple(str);
-	// else
-	// {
-	int **fd = malloc(sizeof(int *) * ft_lstsize(str) - 1);
+	int g = 0;
+	int i  = ft_lstsize(str);
+	int **fd = malloc((sizeof(int *) * i - 1));
+	int *arr = malloc((sizeof(int ) * i));
 	int z = 0;
 	while (z < (ft_lstsize(str) - 1))
 	{
 		fd[z] = malloc(sizeof(int ) * 2);
 		z++;
 	}
-	int i  = ft_lstsize(str);
+	i  = ft_lstsize(str);
 	int k = 0;
 	int h = 0;
 	
@@ -303,7 +302,8 @@ void execute(t_list *str)
 		pipe(fd[h++]);
 	while (str)
 	{
-		if (fork() == 0)
+		arr[k] = fork();
+		if (arr[k] == 0)
 		{
 			str->i = i;
 			execute_chile(str, fd, i, k);
@@ -315,43 +315,16 @@ void execute(t_list *str)
 	{
 	close(fd[0][1]);
 	close(fd[0][0]);
-	}
-	wait(NULL);
-	//}
-}
-// int main()
-// {
-// 	t_list *str;
-// 	str = malloc(sizeof(t_list));
-// 	str->str = "/bin/cat";
-// 	str->file = malloc(sizeof(t_file));
-// 	str->file->name = "d.c";
-// 	str->file->type = 'I';
-// 	str->file->next = NULL;
-// 	t_list *ptr = malloc(sizeof(t_list));
-// 	ptr->str = "/bin/cat";
-// 	ptr->file = malloc(sizeof(t_file));
-// 	ptr->file->name = "d.c";
-// 	ptr->file->type = 'I';
-// 	ptr->file->next = NULL;
-// 	//ptr->next = NULL;
-// 	str->next = ptr;
-// 	t_list *ltr = malloc(sizeof(t_list));
-// 	ltr->str = "/usr/bin/wc";
-// 	ltr->file = malloc(sizeof(t_file));
-// 	ltr->file->name = "wc.c";
-// 	ltr->file->type = 'O';
-// 	ltr->file->next = NULL;
-// 	ptr->next = ltr;;
-// 	execute(str);
+	} 
 
-// }
+}
+
 int main()
 {
 	t_list *str = malloc(sizeof(t_list));
 	str->file  = malloc(sizeof(t_file));
-	str->file->name = "h";
-	str->file->type = 'I';
+	str->file->name = "EOF";
+	str->file->type = 'H';
 	str->file->next = NULL;
 	str->str = "/bin/cat";
 	t_list *ptr = malloc(sizeof(t_list));
@@ -359,6 +332,13 @@ int main()
 	ptr->str = "/usr/bin/wc -w"; 
 	ptr->next = NULL;
 	str->next = ptr;
+	ptr = malloc(sizeof(t_list));
+	ptr->file = malloc(sizeof(t_list));
+	ptr->file->name = "HA.txt";
+	ptr->file->type = 'O';
+	ptr->file->next = NULL;
+	ptr->str = "/bin/cat"; 
+	ptr->next = NULL;
+	str->next->next = ptr;
 	execute(str);
-
 }
