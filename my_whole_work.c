@@ -30,9 +30,7 @@ size_t	ft_strlen(const char *str)
 
 	a = 0;
 	while (str[a] != '\0')
-	{
 		a++;
-	}
 	return (a);
 }
 
@@ -55,7 +53,7 @@ char	*ft_strdup(const char *s)
 	return (str);
 }
 
-int	ft_lstsize(t_execute *lst)
+int	my_lstsize(t_execute *lst)
 {
 	int	i;
 
@@ -68,7 +66,7 @@ int	ft_lstsize(t_execute *lst)
 	return (i);
 }
 
-t_execute	*ft_lstnew(void *before, void *after)
+t_execute	*my_lstnew(void *before, void *after)
 {
 	t_execute	*ptr;
 
@@ -212,7 +210,8 @@ int	ft_isalnum(int a)
 		return (1);
 	return (0);
 }
-t_execute	*ft_lstlast(t_execute *lst)
+
+t_execute	*my_lstlast(t_execute *lst)
 {
 	while (lst)
 	{
@@ -226,7 +225,7 @@ t_execute	*ft_lstlast(t_execute *lst)
 }
 
 
-void	ft_lstadd_back(t_execute **lst, t_execute *new)
+void	my_lstadd_back(t_execute **lst, t_execute *new)
 {
 	t_execute	*ptr;
 
@@ -234,7 +233,7 @@ void	ft_lstadd_back(t_execute **lst, t_execute *new)
 	{
 		if (*lst)
 		{
-			ptr = ft_lstlast(*lst);
+			ptr = my_lstlast(*lst);
 			ptr->next = new;
 		}
 		else
@@ -360,7 +359,7 @@ void fill_env(char **env)
 	{
 		before = ft_substr(env[i], 0, equal(env[i]) + 1);
 		after = ft_substr(env[i],  equal(env[i]) - 1, ft_strlen(env[i]));
-		ft_lstadd_back(&g_data.str, ft_lstnew(before, after));
+		my_lstadd_back(&g_data.str, my_lstnew(before, after));
 		i++;
 	}
 }
@@ -415,7 +414,7 @@ void chnage_old_pwd(char *cmd)
 		g = g->next;
 	}
 	if (i == 0)
-		ft_lstadd_back(&g_data.str, ft_lstnew(ft_strdup("OLDPWD="), cmd));
+		my_lstadd_back(&g_data.str, my_lstnew(ft_strdup("OLDPWD="), cmd));
 }
 
 void ft_cd(char **cmd)
@@ -461,7 +460,7 @@ int is_valid(char **str)
 	i = 0;
 	while (str[i])
 	{
-	j = 0;
+	    j = 0;
 		if (ft_isdigit(str[i][0]) == 1)
 			return (0);
 		while (str[i] && str[i][j])
@@ -592,7 +591,7 @@ void add_to_exp(char *str)
 		return ;
 	name = the_name(str);
 	value = the_value(str);
-	ft_lstadd_back(&g_data.str, ft_lstnew(name, value));
+	my_lstadd_back(&g_data.str, my_lstnew(name, value));
 }
 void add_to_export(char **cmd)
 {
