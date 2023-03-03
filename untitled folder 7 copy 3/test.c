@@ -25,7 +25,7 @@ typedef struct  s_list
 	int				i;
 	int				k;
 	struct  s_list	*next;
-}t_list;
+}t_execute;
 void ft_free(void **str, int x)
 {
 	int i;
@@ -148,7 +148,7 @@ char	**ft_split(char *str, char cut)
 	return (ptr);
 }
 
-int	ft_lstsize(t_list *lst)
+int	ft_lstsize(t_execute *lst)
 {
 	int	i;
 
@@ -249,7 +249,7 @@ int check_it(t_file *str, char type)
 	}
 	return (0);
 }
-void handle_no_input(t_list *str, int **fd)
+void handle_no_input(t_execute *str, int **fd)
 {
 	if (check_it(str->file, 'A') == 0 || check_it(str->file, 'O') == 0)
 	{
@@ -268,7 +268,7 @@ void handle_no_input(t_list *str, int **fd)
 		}
 	}
 }
-void	handle_redir(t_list *str, int **fd, int i)
+void	handle_redir(t_execute *str, int **fd, int i)
 {
 	t_file	*file;
 	int		y;
@@ -294,7 +294,7 @@ void	handle_redir(t_list *str, int **fd, int i)
 	}
 	handle_no_input(str, fd);
 }
-void execute_chile(t_list *str, int **fd, int i, int k)
+void execute_chile(t_execute *str, int **fd, int i, int k)
 {
 	char **ptr = ft_split(str->str, ' ');
 	str->k = k;
@@ -310,7 +310,7 @@ void execute_chile(t_list *str, int **fd, int i, int k)
 	execve(ptr[0], ptr, NULL);	
 	perror("execve");
 }
-void execute_simple(t_list *str)
+void execute_simple(t_execute *str)
 {
 	char **ptr = ft_split(str->str, ' ');
 	t_file *file = str->file;
@@ -334,7 +334,7 @@ void execute_simple(t_list *str)
 	}
 	execve(ptr[0], ptr, NULL);
 }
-void execute(t_list *str)
+void execute(t_execute *str)
 {
 	int g = 0;
 	int i  = ft_lstsize(str);
@@ -369,13 +369,13 @@ void execute(t_list *str)
 }
 // int main()
 // {
-// 	t_list *str = malloc(sizeof(t_list));
+// 	t_execute *str = malloc(sizeof(t_execute));
 // 	str->file  = malloc(sizeof(t_file));
 // 	str->file->name = "h";
 // 	str->file->type = 'I';
 // 	str->file->next = NULL;
 // 	str->str = "/bin/cat";
-// 	t_list *ptr = malloc(sizeof(t_list));
+// 	t_execute *ptr = malloc(sizeof(t_execute));
 // 	ptr->file =NULL;
 // 	ptr->str = "/usr/bin/wc -w"; 
 // 	ptr->next = NULL;
@@ -385,9 +385,9 @@ void execute(t_list *str)
 // }
 int main()
 {
-	t_list *str;
-	t_list *ptr;
-	str = malloc(sizeof(t_list));
+	t_execute *str;
+	t_execute *ptr;
+	str = malloc(sizeof(t_execute));
 	str->file = malloc(sizeof(t_file));
 	// str->in = NULL;
 	str->file->name = "test.c";
@@ -395,7 +395,7 @@ int main()
 	str->file->next = NULL;
 	str->str = "/bin/cat";
 	// str->next = NULL;
-	ptr = malloc(sizeof(t_list));
+	ptr = malloc(sizeof(t_execute));
 	ptr->file = malloc(sizeof(t_file));
 	str->next = ptr;
 	ptr->file->name = "out";
@@ -406,13 +406,13 @@ int main()
 	ptr->file->next->next = NULL;
 	ptr->str = "/usr/bin/wc";
 	ptr->next = NULL;
-	// ptr = malloc(sizeof(t_list));
+	// ptr = malloc(sizeof(t_execute));
 	// str->next = ptr;
 	// ptr->in = NULL;
 	// ptr->next = NULL;
 	// ptr->out = "OPLA";
 	// ptr->str = "/usr/bin/wc";
-	// ptr = malloc(sizeof(t_list));
+	// ptr = malloc(sizeof(t_execute));
     // str->next->next = ptr;
 	// ptr->in = "test.c";
 	// ptr->next = NULL;

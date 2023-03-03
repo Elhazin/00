@@ -25,8 +25,13 @@ typedef struct  s_list
 	int				i;
 	int				k;
 	struct  s_list	*next;
-}t_list;
-
+}t_execute;
+typedef struct s_global
+{
+	int status;
+	int old_status;
+}t_global;
+t_global data;
 char	*ft_substr(char const *str, unsigned int start, size_t len)
 {
 	char	*ptr;
@@ -121,7 +126,7 @@ char	**ft_split(char *str, char cut)
 	return (ptr);
 }
 
-int	ft_lstsize(t_list *lst)
+int	ft_lstsize(t_execute *lst)
 {
 	int	i;
 
@@ -148,7 +153,7 @@ void handle_here_doc(t_file *str)
 	int fl;
 	char *ptr;
 	pipe(fd);
-	x  = fork();
+	x = fork();
 	if (x == 0)
 	{
 		while (1)
@@ -219,7 +224,7 @@ int check_it(t_file *str, char type)
 	return (0);
 }
 
-void handle_no_input(t_list *str, int **fd)
+void handle_no_input(t_execute *str, int **fd)
 {
 	if (check_it(str->file, 'A') == 0 || check_it(str->file, 'O') == 0)
 	{
@@ -239,7 +244,7 @@ void handle_no_input(t_list *str, int **fd)
 	}
 }
 
-void	handle_redir(t_list *str, int **fd, int i)
+void	handle_redir(t_execute *str, int **fd, int i)
 {
 	t_file *file;
 	int y;
@@ -265,7 +270,9 @@ void	handle_redir(t_list *str, int **fd, int i)
 	handle_no_input(str, fd);
 }
 
-void execute_chile(t_list *str, int **fd, int i, int k)
+
+
+void execute_chile(t_execute *str, int **fd, int i, int k)
 {
 	char **ptr = ft_split(str->str, ' ');
 	str->k = k;
@@ -282,12 +289,12 @@ void execute_chile(t_list *str, int **fd, int i, int k)
 	perror("execve");
 }
 
-void execute(t_list *str)
+void execute(t_execute *str)
 {
 	int g = 0;
 	int i  = ft_lstsize(str);
 	int **fd = malloc((sizeof(int *) * i - 1));
-	int *arr = malloc((sizeof(int ) * i));
+	pid_t pid;
 	int z = 0;
 	while (z < (ft_lstsize(str) - 1))
 	{
@@ -302,8 +309,8 @@ void execute(t_list *str)
 		pipe(fd[h++]);
 	while (str)
 	{
-		arr[k] = fork();
-		if (arr[k] == 0)
+		pid = fork();
+		if (pid == 0)
 		{
 			str->i = i;
 			execute_chile(str, fd, i, k);
@@ -315,29 +322,37 @@ void execute(t_list *str)
 	{
 	close(fd[0][1]);
 	close(fd[0][0]);
-	} 
-
+	}
+	int status;
+		i = 0;
+		while (i < k)
+		{
+			if (waitpid(-1, &status, 0) == pid)
+				data.status = status;
+			i++;
+		}
+		printf("%d\n", data.status);
 }
 
 int main()
 {
-	t_list *str = malloc(sizeof(t_list));
+	t_execute *str = malloc(sizeof(t_execute));
 	str->file  = malloc(sizeof(t_file));
-	str->file->name = "EOF";
-	str->file->type = 'H';
+	str->file->name = "d.c";
+	str->file->type = 'I';
 	str->file->next = NULL;
 	str->str = "/bin/cat";
-	t_list *ptr = malloc(sizeof(t_list));
+	t_execute *ptr = malloc(sizeof(t_execute));
 	ptr->file =NULL;
-	ptr->str = "/usr/bin/wc -w"; 
+	ptr->str = "/bin/ls"; 
 	ptr->next = NULL;
 	str->next = ptr;
-	ptr = malloc(sizeof(t_list));
-	ptr->file = malloc(sizeof(t_list));
+	ptr = malloc(sizeof(t_execute));
+	ptr->file = malloc(sizeof(t_execute));
 	ptr->file->name = "HA.txt";
 	ptr->file->type = 'O';
 	ptr->file->next = NULL;
-	ptr->str = "/bin/cat"; 
+	ptr->str = "/bin/ls"; 
 	ptr->next = NULL;
 	str->next->next = ptr;
 	execute(str);

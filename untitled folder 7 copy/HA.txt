@@ -1,1 +1,7 @@
-       5
+HA.txt
+a.out
+d.c
+get.c
+h
+lexeiit.c
+test.c

@@ -20,7 +20,7 @@ typedef struct  s_list
 	char			*str;
 	t_file 			*file;
 	struct  s_list	*next;
-}t_list;
+}t_execute;
 
 char	*ft_substr(char const *str, unsigned int start, size_t len)
 {
@@ -116,7 +116,7 @@ char	**ft_split(char *str, char cut)
 	return (ptr);
 }
 
-int	ft_lstsize(t_list *lst)
+int	ft_lstsize(t_execute *lst)
 {
 	int	i;
 
@@ -128,11 +128,11 @@ int	ft_lstsize(t_list *lst)
 	}
 	return (i);
 }
-void handle_here_doc(t_list *str)
+void handle_here_doc(t_execute *str)
 {
 
 }
-void handle_input(t_list *str)
+void handle_input(t_execute *str)
 {
 	int fds;
 	fds = open(str->file->name, O_RDWR, 0777);
@@ -144,7 +144,7 @@ void handle_input(t_list *str)
 	dup2(fds, 0);
 	close(fds);
 }
-void handle_append(t_list *str)
+void handle_append(t_execute *str)
 {
 	int fds;
 	fds = open(str->file->name, O_CREAT | O_APPEND | O_RDWR, 0777);
@@ -156,7 +156,7 @@ void handle_append(t_list *str)
 	dup2(fds, 1);
 	close(fds);
 }
-void	handle_output(t_list *str)
+void	handle_output(t_execute *str)
 {
 	int fds;
 	fds = open(str->file->name, O_CREAT | O_RDWR, 0777);
@@ -168,7 +168,7 @@ void	handle_output(t_list *str)
 	dup2(fds, 1);
 	close(fds);
 }
-void	handle_redir(t_list *str, int fd[][2], int i)
+void	handle_redir(t_execute *str, int fd[][2], int i)
 {
 	if (str->file != NULL)
 	{
@@ -189,7 +189,7 @@ void	handle_redir(t_list *str, int fd[][2], int i)
 		}
 	}
 }
-void execute_chile(t_list *str, int fd[][2], int i, int k)
+void execute_chile(t_execute *str, int fd[][2], int i, int k)
 {
 	char **ptr = ft_split(str->str, ' ');
 	if (str->out != NULL)
@@ -235,7 +235,7 @@ void execute_chile(t_list *str, int fd[][2], int i, int k)
 	perror("execve");
 }
 
-void execute(t_list *str)
+void execute(t_execute *str)
 {
 	int fd[ft_lstsize(str) - 1][2];
 	int i  = ft_lstsize(str);
@@ -259,20 +259,20 @@ void execute(t_list *str)
 }
 int main()
 {
-	t_list *str;
-	t_list *ptr;
-	str = malloc(sizeof(t_list));
+	t_execute *str;
+	t_execute *ptr;
+	str = malloc(sizeof(t_execute));
 	str->in = NULL;
 	str->out = NULL;
 	str->str = "/bin/ls -la";
 	str->next = NULL;
-	ptr = malloc(sizeof(t_list));
+	ptr = malloc(sizeof(t_execute));
 	str->next = ptr;
 	ptr->in = NULL;
 	ptr->next = NULL;
 	ptr->out = "OPLA";
 	ptr->str = "/usr/bin/wc";
-	ptr = malloc(sizeof(t_list));
+	ptr = malloc(sizeof(t_execute));
     str->next->next = ptr;
 	ptr->in = "test.c";
 	ptr->next = NULL;
