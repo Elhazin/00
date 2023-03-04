@@ -6,7 +6,7 @@
 /*   By: abouzanb <abouzanb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 11:20:21 by abouzanb          #+#    #+#             */
-/*   Updated: 2023/03/04 22:40:00 by abouzanb         ###   ########.fr       */
+/*   Updated: 2023/03/05 00:13:21 by abouzanb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -284,6 +284,7 @@ void execute_child(t_exeuction *str, t_va *va)
 	va->cmd = ft_split(str->str, ' ');
 	if (va->cmd == NULL)
 		return ;
+
 	handle_redir(str, va);
 	if (check_if_built(str) == 0)
 	{
@@ -298,9 +299,12 @@ void execute_child(t_exeuction *str, t_va *va)
 void creates_childs(t_exeuction *str, t_va *va)
 {
 	int  k;
-	 k = 0;
+
+	k = 0;
+	va->i = 0;
 	while (str)
 	{
+
 		va->id = fork();
 		if (va->id == 0)
 		{
@@ -316,7 +320,6 @@ void simple(t_exeuction *str, t_va *av)
 	av->size= 1;
 	av->cmd = ft_split(str->str, ' ');
 	handle_redir(str, av);
-	ft_putstr_fd("sidfgsvbsndkmsjfhugbfjnmvdd\n", 2);
 	if (check_if_built(str) == 0)
 	{
 		av->id = fork();
@@ -361,6 +364,7 @@ void execution(t_exeuction *str)
 {
 	t_va va;	
 	va.size = ft_lstsize(str);
+	printf("%d\n", va.size);
 	if (va.size == 0)
 		return ;
 	if (va.size == 1)
