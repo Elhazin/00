@@ -6,7 +6,7 @@
 /*   By: abouzanb <abouzanb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 21:36:28 by abouzanb          #+#    #+#             */
-/*   Updated: 2023/03/03 23:43:57 by abouzanb         ###   ########.fr       */
+/*   Updated: 2023/03/04 15:34:31 by abouzanb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,4 +129,17 @@ int	is_valid(char **str)
 			i++;
 	}
 	return (1);
+}
+
+int	ft_lstsize(t_exeuction *lst)
+{
+	int	i;
+
+	i = 0;
+	while (lst)
+	{
+		lst = lst -> next;
+		i++;
+	}
+	return (i);
 }

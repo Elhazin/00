@@ -6,12 +6,20 @@
 /*   By: abouzanb <abouzanb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 21:45:38 by abouzanb          #+#    #+#             */
-/*   Updated: 2023/03/03 23:36:40 by abouzanb         ###   ########.fr       */
+/*   Updated: 2023/03/04 15:32:48 by abouzanb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+void ft_unset(char **str)
+{
+	
+}
+void ft_exit(char **str)
+{
+	
+}
 void	ft_echo(char **str)
 {
 	int	i;
