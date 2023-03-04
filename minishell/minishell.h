@@ -39,7 +39,6 @@ typedef struct s_data
 }   t_data;
 
 
-
  typedef struct s_files
  {
 	char	*name;
@@ -97,4 +96,9 @@ void		ft_export(char **cmd);
 void		ft_unset(char **str);
 int			ft_lstsize(t_exeuction *lst);
 void		ft_exit(char **str);
+void		execution(t_exeuction *str);
+
+
+
+
 #endif

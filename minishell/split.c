@@ -6,7 +6,7 @@
 /*   By: abouzanb <abouzanb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 21:39:45 by abouzanb          #+#    #+#             */
-/*   Updated: 2023/03/03 23:45:47 by abouzanb         ###   ########.fr       */
+/*   Updated: 2023/03/04 22:02:00 by abouzanb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,32 +113,32 @@ char	**ft_split(char *str, char cut)
 	return (ptr);
 }
 
-int main(int ac, char *av[], char *env[])
-{
-	char	**ptr;
-	char	*str;
+// int main(int ac, char *av[], char *env[])
+// {
+// 	char	**ptr;
+// 	char	*str;
 
-	fill_env(env);
-	while (1)
-	{
-		while (myreadline(&str) != 0)
-		;
-		ptr = ft_split(str,  ' ');
-		free(str);
-		if (ptr == NULL)
-			continue;
-		if (strcmp(ptr[0], "echo") == 0)
-			ft_echo(ptr);
-		else if (strcmp(ptr[0], "cd") == 0)
-			ft_cd(ptr);
-		else if (strcmp(ptr[0], "env") == 0)
-			ft_env();
-		else if (strcmp(ptr[0], "pwd") == 0)
-			ft_pwd();
-		else if (strcmp(ptr[0], "export") == 0)
-			ft_export(ptr);
-		else 
-			system(str);
-		ft_free(ptr);
-	}
-}
+// 	fill_env(env);
+// 	while (1)
+// 	{
+// 		while (myreadline(&str) != 0)
+// 		;
+// 		ptr = ft_split(str,  ' ');
+// 		free(str);
+// 		if (ptr == NULL)
+// 			continue;
+// 		if (strcmp(ptr[0], "echo") == 0)
+// 			ft_echo(ptr);
+// 		else if (strcmp(ptr[0], "cd") == 0)
+// 			ft_cd(ptr);
+// 		else if (strcmp(ptr[0], "env") == 0)
+// 			ft_env();
+// 		else if (strcmp(ptr[0], "pwd") == 0)
+// 			ft_pwd();
+// 		else if (strcmp(ptr[0], "export") == 0)
+// 			ft_export(ptr);
+// 		else 
+// 			system(str);
+// 		ft_free(ptr);
+// 	}
+// }

@@ -6,7 +6,7 @@
 /*   By: abouzanb <abouzanb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 11:20:21 by abouzanb          #+#    #+#             */
-/*   Updated: 2023/03/04 15:41:19 by abouzanb         ###   ########.fr       */
+/*   Updated: 2023/03/04 22:40:00 by abouzanb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void error_print(int i, char *cmd)
 	{
 		ft_putstr_fd(cmd, 2);
 		ft_putstr_fd(": command not found", 2);
+		exit(127);
 	}
 }
 void init(t_va *va)
@@ -69,8 +70,8 @@ void handle_here_doc(t_file *str)
 	{
 		while (1)
 		{
-			ptr = readline("> ");			
-			if (memcmp(str->name, ptr, ft_strlen(ptr) - 1) == 0)
+			ptr = readline("> ");	
+			if (memcmp(str->name, ptr, ft_strlen(ptr)) == 0)
 			{
 				close(fd[1]);
 				dup2(fd[0], 0);
@@ -104,7 +105,6 @@ void handle_append(t_file *file)
 	fds = open(file->name, O_CREAT | O_APPEND | O_RDWR, 0777);
 	if (fds == -1)
 	{
-		
 		perror("open");
 		exit(1);
 	}
@@ -138,8 +138,8 @@ void handle_other_input(t_exeuction *str, t_va *va)
 	{
 		if (ft_lstsize(str) != va->size && va->size != 1)
 		{
-			dup2(va->fd[va->k][0], 0);
-			close(va->fd[va->k][0]);
+			dup2(va->fd[va->k - 1][0], 0);
+			close(va->fd[va->k - 1][0]);
 		}
 	}
 }
@@ -164,6 +164,19 @@ void handle_redir(t_exeuction *str, t_va *va)
 		file = file->next;
 	}
 	handle_other_input(str, va);
+}
+
+int	my_lstsize(t_execute *lst)
+{
+	int	i;
+
+	i = 0;
+	while (lst)
+	{
+		lst = lst -> next;
+		i++;
+	}
+	return (i);
 }
 
 char **get_env()
@@ -298,9 +311,51 @@ void creates_childs(t_exeuction *str, t_va *va)
 		k++;
 	}
 }
-void simple(t_exeuction *str)
+void simple(t_exeuction *str, t_va *av)
 {
+	av->size= 1;
+	av->cmd = ft_split(str->str, ' ');
+	handle_redir(str, av);
+	ft_putstr_fd("sidfgsvbsndkmsjfhugbfjnmvdd\n", 2);
+	if (check_if_built(str) == 0)
+	{
+		av->id = fork();
+		if (av->id == 0)
+		{
+			get_path(str, av);
+			if (av->comd == NULL)
+				error_print(1, str->str);
+			av->env = get_env();
+			execve(av->comd, av->cmd, av->env);
+		}
+	}
+	ft_free(av->cmd);
+}
+void ft_close(t_va *va)
+{
+	int i;
+
+	i = 0;
+	while (i < (va->size - 1))
+	{
+		close(va->fd[i][1]);
+		close(va->fd[i][0]);
+		i++;
+	}
 	
+}
+void wait_for_them(t_va *va)
+{
+	int i;
+	int status;
+	
+	i = 0;
+	while (i < va->size)
+	{
+		if (waitpid(-1, &status, 0) == 0)
+			g_data.exit_status = status;
+		i++;
+	}
 }
 void execution(t_exeuction *str)
 {
@@ -309,11 +364,13 @@ void execution(t_exeuction *str)
 	if (va.size == 0)
 		return ;
 	if (va.size == 1)
-		simple(str);
+		simple(str, &va);
 	else 
 	{
 		va.fd = malloc(sizeof(int *) * va.size);
 		init(&va);
 		creates_childs(str, &va);
+		ft_close(&va);
 	}
+	wait_for_them(&va);
 }
