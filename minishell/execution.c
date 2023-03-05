@@ -6,7 +6,7 @@
 /*   By: abouzanb <abouzanb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 11:20:21 by abouzanb          #+#    #+#             */
-/*   Updated: 2023/03/05 00:13:21 by abouzanb         ###   ########.fr       */
+/*   Updated: 2023/03/05 13:55:21 by abouzanb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,7 +203,7 @@ int check_if_built(t_exeuction *str)
 
 	va.cmd  = ft_split(str->str, ' ');
 	va.i = 0;
-	if (strcmp(str->str, "echo") == 0 || strcmp(str->str, "ECHO"))
+	if (strcmp(str->str, "echo") == 0 || strcmp(str->str, "ECHO") == 0)
 	{
 		ft_echo(va.cmd);
 		return (1);
