@@ -6,7 +6,7 @@
 /*   By: abouzanb <abouzanb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 23:31:29 by abouzanb          #+#    #+#             */
-/*   Updated: 2023/03/05 20:03:20 by abouzanb         ###   ########.fr       */
+/*   Updated: 2023/03/05 22:09:28 by abouzanb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ void print_export()
 	{
 		printf("declare -x %s", ptr->name);
 		if (ptr->value)
-			printf("\"%s\"\n", ptr->value);
+			printf("\"%s\"", ptr->value);
+		printf("\n");
 		ptr = ptr->next;
 	}
 	write(1, "\n", 1);

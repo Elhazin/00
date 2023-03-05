@@ -6,7 +6,7 @@
 /*   By: abouzanb <abouzanb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 21:33:06 by abouzanb          #+#    #+#             */
-/*   Updated: 2023/03/05 21:21:39 by abouzanb         ###   ########.fr       */
+/*   Updated: 2023/03/05 22:48:28 by abouzanb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ char *the_value(char *str)
 	if (ptr == NULL)
 		return (NULL);
 	i++;
-	while (str[i] && str[i] != '=')
+	while (str[i])
 	{
 		ptr[x] = str[i];
 		x++;
@@ -142,7 +142,6 @@ int update(char *str)
 		{
 			if (strcmp(s->name, the_name(str)) == 0)
 			{
-			printf("rah dkhel lhena    %s\n\n%s\n", the_value(str), the_name(str));
 				s->value = ft_strjoin(s->value, the_value(str));
 				return (0);
 			}
@@ -214,3 +213,4 @@ int	equal(char *str)
 	}
 	return (i);
 }
+

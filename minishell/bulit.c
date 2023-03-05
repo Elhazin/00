@@ -6,7 +6,7 @@
 /*   By: abouzanb <abouzanb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 21:45:38 by abouzanb          #+#    #+#             */
-/*   Updated: 2023/03/04 15:32:48 by abouzanb         ###   ########.fr       */
+/*   Updated: 2023/03/06 00:16:45 by abouzanb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,14 @@
 
 void ft_unset(char **str)
 {
-	
+	t_va *va;
+
+	va->i = 0;
+	while (str[va->i])
+	{
+		if (check_is_valid(str[va->i]) == 0      b  )		
+	}
+
 }
 void ft_exit(char **str)
 {
