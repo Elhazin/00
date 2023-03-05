@@ -6,7 +6,7 @@
 /*   By: abouzanb <abouzanb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 21:33:06 by abouzanb          #+#    #+#             */
-/*   Updated: 2023/03/03 23:41:02 by abouzanb         ###   ########.fr       */
+/*   Updated: 2023/03/05 21:21:39 by abouzanb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,16 +62,22 @@ char *the_name(char *str)
 	ptr = malloc(sizeof(char ) * x + 3);
 	x = 0;
 	i = 0;
-	while (str[i] && str[i] != '=')
+	while (str[i])
 	{
-		if (str[i] == '+')
-			i++;
 		ptr[x] = str[i];
 		x++;
 		i++;
+		if (str[i] == '+')
+			i++;
+		if (str[i] == '=')
+		{
+					ptr[x] = str[i];
+					x++;
+			break ;
+		}
 	}
-	ptr[x] = '=';
-	x++;
+	//ptr[x] = '=';
+
 	ptr[x] = '\0';
 	return (ptr);
 }
@@ -80,6 +86,7 @@ char *the_value(char *str)
 {
 	char *ptr;
 	int i;
+	int a;
 	int x;
 
 	x = 0;
@@ -87,11 +94,17 @@ char *the_value(char *str)
 
 	while (str[i] && str[i] != '=')
 		i++;
+	
 	if (str[i] == '\0')
 		return (NULL);
-	ptr = malloc(sizeof(char ) * i + 1);
+	a = i;
+	while (str[a])
+		a++;
+	ptr = malloc(sizeof(char ) * a + 1);
+	if (ptr == NULL)
+		return (NULL);
 	i++;
-	while (str[i])
+	while (str[i] && str[i] != '=')
 	{
 		ptr[x] = str[i];
 		x++;
@@ -129,12 +142,28 @@ int update(char *str)
 		{
 			if (strcmp(s->name, the_name(str)) == 0)
 			{
+			printf("rah dkhel lhena    %s\n\n%s\n", the_value(str), the_name(str));
 				s->value = ft_strjoin(s->value, the_value(str));
-				// free(str);
 				return (0);
 			}
-			s =s->next;
+			s = s->next;
 		}
+	}
+	return (1);
+}
+
+int already_is(char *str)
+{
+	t_execute *s;
+
+	while (s)
+	{
+		if (strcmp(s->name, the_name(str)) == 0)
+		{
+			s->value = the_value(str);
+			return (0);
+		}
+		s = s->next;
 	}
 	return (1);
 }
@@ -148,6 +177,8 @@ void add_to_exp(char *str)
 
 	if (update(str) == 0)
 		return ;
+	if (already_is(str) == 0)
+		return ;
 	name = the_name(str);
 	value = the_value(str);
 	my_lstadd_back(&g_data.str, my_lstnew(name, value));
@@ -157,6 +188,10 @@ void add_to_export(char **cmd)
 	int i;
 
 	i = 1;
+	if (cmd[0][0] == '\0')
+	{
+		ft_putstr_fd("bash: export: `': not a valid identifier", 2);
+	}
 	if (is_valid(cmd) == 0)
 		return ;
 	while (cmd[i])

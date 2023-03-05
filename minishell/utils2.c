@@ -6,7 +6,7 @@
 /*   By: abouzanb <abouzanb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 23:31:29 by abouzanb          #+#    #+#             */
-/*   Updated: 2023/03/03 23:40:40 by abouzanb         ###   ########.fr       */
+/*   Updated: 2023/03/05 20:03:20 by abouzanb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int myreadline(char **str)
 {
-	*str = readline("bash-3.2$ ");
+	*str = readline("\nbfbdgsash-3.2$ ");
 	if (strcmp(*str, "") == 0)
 		return (1);
 	if (strlen(*str) > 0)
@@ -44,6 +44,7 @@ void print_export()
 			printf("\"%s\"\n", ptr->value);
 		ptr = ptr->next;
 	}
+	write(1, "\n", 1);
 }
 
 int ft_count(char **str)
@@ -90,8 +91,8 @@ void fill_env(char **env)
 	i = 0;
 	while (env[i])
 	{
-		before = ft_substr(env[i], 0, equal(env[i]) + 1);
-		after = ft_substr(env[i],  equal(env[i]) - 1, ft_strlen(env[i]));
+		before = the_name(env[i]);
+		after = the_value(env[i]);
 		my_lstadd_back(&g_data.str, my_lstnew(before, after));
 		i++;
 	}

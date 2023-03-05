@@ -6,7 +6,7 @@
 /*   By: abouzanb <abouzanb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 11:20:21 by abouzanb          #+#    #+#             */
-/*   Updated: 2023/03/05 15:25:39 by abouzanb         ###   ########.fr       */
+/*   Updated: 2023/03/05 18:40:35 by abouzanb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,13 @@ void	ft_putstr_fd(char *s, int fd)
 	i = 0;
 	if (!s)
 		return ;
+	write(fd, "minishell: ", 11);
 	while (s[i] != '\0')
 	{
-		write(fd, "minishell: ", 11);
 		write(fd, &s[i], 1);
 		i++;
 	}
+	write(fd, "\n", 1);
 }
 
 void error_print(int i, char *cmd)
@@ -130,7 +131,6 @@ void handle_other_input(t_exeuction *str, t_va *va)
 	{
 		if (ft_lstsize(str) > 1)
 		{
-			fprintf(stderr, "i came here\n");
 			dup2(va->fd[va->k][1], 1);
 			close(va->fd[va->k][1]);
 		}
@@ -143,6 +143,7 @@ void handle_other_input(t_exeuction *str, t_va *va)
 			close(va->fd[va->k - 1][0]);
 			close(va->fd[va->k - 1][1]);
 		}
+
 	}
 }
 void handle_redir(t_exeuction *str, t_va *va)
@@ -293,8 +294,10 @@ void execute_child(t_exeuction *str, t_va *va)
 		get_path(str, va);
 		if (va->comd == NULL)
 			error_print(1, str->str);
-		va->env = get_env();
-		execve(va->comd, va->cmd, va->env);
+		fprintf(stderr, "ma3lima  | %s |\n", va->comd);
+		//va->env = get_env();
+		execve(va->comd, va->cmd, NULL);
+		perror("execve");
 	}
 }
 
@@ -330,8 +333,8 @@ void simple(t_exeuction *str, t_va *av)
 			get_path(str, av);
 			if (av->comd == NULL)
 				error_print(1, str->str);
-			av->env = get_env();
-			execve(av->comd, av->cmd, av->env);
+		//	av->env = get_env();
+			execve(av->comd, av->cmd,NULL);
 		}
 	}
 	ft_free(av->cmd);

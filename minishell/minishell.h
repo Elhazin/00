@@ -61,6 +61,7 @@ void fill_env(char **env);
 int			ft_isdigit(int a);
 size_t		ft_strlen(const char *str);
 char		*ft_strdup(const char *s);
+void	ft_putstr_fd(char *s, int fd);
 int			my_lstsize(t_execute *lst);
 t_execute	*my_lstnew(void *before, void *after);
 char		*ft_substr(char *str, unsigned int start, size_t len);
