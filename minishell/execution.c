@@ -6,7 +6,7 @@
 /*   By: abouzanb <abouzanb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 11:20:21 by abouzanb          #+#    #+#             */
-/*   Updated: 2023/03/05 13:55:21 by abouzanb         ###   ########.fr       */
+/*   Updated: 2023/03/05 15:25:39 by abouzanb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,7 @@ void handle_other_input(t_exeuction *str, t_va *va)
 	{
 		if (ft_lstsize(str) > 1)
 		{
+			fprintf(stderr, "i came here\n");
 			dup2(va->fd[va->k][1], 1);
 			close(va->fd[va->k][1]);
 		}
@@ -140,6 +141,7 @@ void handle_other_input(t_exeuction *str, t_va *va)
 		{
 			dup2(va->fd[va->k - 1][0], 0);
 			close(va->fd[va->k - 1][0]);
+			close(va->fd[va->k - 1][1]);
 		}
 	}
 }
@@ -190,7 +192,7 @@ char **get_env()
 	av.size = my_lstsize(g_data.str);
 	env = malloc(sizeof(char **) * av.size + 1);
 	env[av.size] = NULL;
-	while (temp)
+	while (av.i < av.size)
 	{
 		env[av.i] = ft_strjoin(temp->name, temp->value);
 		temp = temp->next; 
@@ -208,32 +210,32 @@ int check_if_built(t_exeuction *str)
 		ft_echo(va.cmd);
 		return (1);
 	}
-	if (strcmp(str->str, "cd") == 0)
+	else if (strcmp(str->str, "cd") == 0)
 	{
 		ft_cd(va.cmd);
 		return (1);
 	}
-	if (strcmp(str->str, "env") == 0 || strcmp(str->str, "ENV") == 0)
+	else if (strcmp(str->str, "env") == 0 || strcmp(str->str, "ENV") == 0)
 	{
 		ft_env();
 		return (1);
 	}
-	if (strcmp(str->str, "unset") == 0)
+	else if (strcmp(str->str, "unset") == 0)
 	{
 		ft_unset(va.cmd);
 		return (1);
 	}
-	if (strcmp(str->str, "exit") == 0)
+	else if (strcmp(str->str, "exit") == 0)
 	{
 		ft_exit(va.cmd);
 		return (1);
 	}
-	if (strcmp(str->str, "export") == 0)
+	else if (strcmp(str->str, "export") == 0)
 	{
 		ft_export(va.cmd);
 		return (1);
 	}
-	if (strcmp(str->str, "pwd") == 0 || strcmp(str->str, "PWD") == 0)
+	else if (strcmp(str->str, "pwd") == 0 || strcmp(str->str, "PWD") == 0)
 	{
 		ft_pwd();
 		return (1);
@@ -364,14 +366,13 @@ void execution(t_exeuction *str)
 {
 	t_va va;	
 	va.size = ft_lstsize(str);
-	printf("%d\n", va.size);
 	if (va.size == 0)
 		return ;
 	if (va.size == 1)
 		simple(str, &va);
 	else 
 	{
-		va.fd = malloc(sizeof(int *) * va.size);
+		va.fd = malloc(sizeof(int *) * va.size - 1);
 		init(&va);
 		creates_childs(str, &va);
 		ft_close(&va);

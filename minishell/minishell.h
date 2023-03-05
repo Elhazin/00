@@ -57,6 +57,7 @@ typedef struct  s_list
 
 t_data  g_data;
 
+void fill_env(char **env);
 int			ft_isdigit(int a);
 size_t		ft_strlen(const char *str);
 char		*ft_strdup(const char *s);
