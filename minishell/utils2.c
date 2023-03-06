@@ -6,7 +6,7 @@
 /*   By: abouzanb <abouzanb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 23:31:29 by abouzanb          #+#    #+#             */
-/*   Updated: 2023/03/05 22:09:28 by abouzanb         ###   ########.fr       */
+/*   Updated: 2023/03/06 11:46:29 by abouzanb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int myreadline(char **str)
 {
-	*str = readline("\nbfbdgsash-3.2$ ");
+	*str = readline("mini-3.2$ ");
 	if (strcmp(*str, "") == 0)
 		return (1);
 	if (strlen(*str) > 0)

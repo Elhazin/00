@@ -6,7 +6,7 @@
 /*   By: abouzanb <abouzanb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 21:33:06 by abouzanb          #+#    #+#             */
-/*   Updated: 2023/03/05 22:48:28 by abouzanb         ###   ########.fr       */
+/*   Updated: 2023/03/06 12:03:04 by abouzanb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,6 +174,7 @@ void add_to_exp(char *str)
 	int i;
 	int j;
 
+		
 	if (update(str) == 0)
 		return ;
 	if (already_is(str) == 0)
@@ -185,17 +186,19 @@ void add_to_exp(char *str)
 void add_to_export(char **cmd)
 {
 	int i;
-
 	i = 1;
-	if (cmd[0][0] == '\0')
-	{
-		ft_putstr_fd("bash: export: `': not a valid identifier", 2);
-	}
 	if (is_valid(cmd) == 0)
 		return ;
 	while (cmd[i])
 	{
-		add_to_exp(cmd[1]);
+		// 	fprintf(stderr, "ajfhnhjvfd\n");
+		// if (cmd[i][0] == '\0')
+		// {
+		// 	ft_putstr_fd("bash: export: `': not a valid identifier", 2);
+		// 	i++;
+		// 	continue;
+		// }
+		add_to_exp(cmd[i]);
 		i++;
 	}
 }

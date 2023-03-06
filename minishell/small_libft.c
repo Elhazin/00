@@ -6,7 +6,7 @@
 /*   By: abouzanb <abouzanb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 21:36:28 by abouzanb          #+#    #+#             */
-/*   Updated: 2023/03/04 15:34:31 by abouzanb         ###   ########.fr       */
+/*   Updated: 2023/03/06 12:10:06 by abouzanb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,8 +108,12 @@ int	is_valid(char **str)
 	int	j;
 
 	i = 0;
+
 	while (str[i])
 	{
+		printf("%p---{%s}\n", str[i], str[i]);
+		if (strcmp(str[i], "\"\"") == 0)
+			printf("fdegtbds");
 		j = 0;
 		if (ft_isdigit(str[i][0]) == 1)
 			return (0);
