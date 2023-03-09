@@ -6,7 +6,7 @@
 /*   By: abouzanb <abouzanb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 21:36:28 by abouzanb          #+#    #+#             */
-/*   Updated: 2023/03/06 12:10:06 by abouzanb         ###   ########.fr       */
+/*   Updated: 2023/03/06 12:41:52 by abouzanb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,9 +111,7 @@ int	is_valid(char **str)
 
 	while (str[i])
 	{
-		printf("%p---{%s}\n", str[i], str[i]);
-		if (strcmp(str[i], "\"\"") == 0)
-			printf("fdegtbds");
+		//check_if_the first argumments is null bytes "is nedded here"
 		j = 0;
 		if (ft_isdigit(str[i][0]) == 1)
 			return (0);

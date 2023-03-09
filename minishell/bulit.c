@@ -6,7 +6,7 @@
 /*   By: abouzanb <abouzanb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 21:45:38 by abouzanb          #+#    #+#             */
-/*   Updated: 2023/03/06 11:34:58 by abouzanb         ###   ########.fr       */
+/*   Updated: 2023/03/06 12:42:40 by abouzanb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ void ft_cd(char **cmd)
 	pwd = getcwd(NULL, 0);
 	if (ft_count(cmd) == 1)
 	{
+		
 		chdir("/Users/abouzanb");
 		chnage_old_pwd(pwd);
 	}

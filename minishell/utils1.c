@@ -6,7 +6,7 @@
 /*   By: abouzanb <abouzanb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 21:33:06 by abouzanb          #+#    #+#             */
-/*   Updated: 2023/03/06 12:03:04 by abouzanb         ###   ########.fr       */
+/*   Updated: 2023/03/09 18:55:25 by abouzanb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,12 +167,23 @@ int already_is(char *str)
 	return (1);
 }
 
+// char every_no_terry(char *str)
+// {
+	
+// }
+// int add_to_unvalue(char *str)
+// {
+// 	t_va va;
+// 	va.comd = the_name(str);
+// 	if (stch)                                  
+// }
+
 void add_to_exp(char *str)
 {
-	char *name;
-	char *value;
-	int i;
-	int j;
+	char	*name;
+	char	*value;
+	int		i;
+	int		j;
 
 		
 	if (update(str) == 0)
