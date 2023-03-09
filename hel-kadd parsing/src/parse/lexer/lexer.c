@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-kadd <hel-kadd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abouzanb <abouzanb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 19:21:09 by hel-kadd          #+#    #+#             */
-/*   Updated: 2023/03/09 20:10:07 by hel-kadd         ###   ########.fr       */
+/*   Updated: 2023/03/10 00:15:09 by abouzanb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../../include/minishell.h"
 
 //funcrion handle pipe and semi
 int lexer_semi_pipe(t_token **token, int i, char *line)
@@ -33,9 +33,13 @@ int lexer_redirection(t_token **token, int i, char *line)
             add_token(token, TOKEN_RED_INFILE, line + i, 1);
         i++;
     }
-    else 
+    else
     {
-        add_token(token, TOKEN_RED_OUTFILE, line + i, 1);
+        if (line[i + 1] == '>')
+            add_token(token, TOKEN_APEND, line + i, 2);
+        
+        else 
+            add_token(token, TOKEN_RED_OUTFILE, line + i, 1);
         i++;
     }
     return (i);

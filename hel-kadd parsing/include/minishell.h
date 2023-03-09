@@ -17,6 +17,7 @@
 
 typedef struct s_token {
     enum {
+        TOKEN_APEND,
         TOKEN_STR,
         TOKEN_EQUALS,
         TOKEN_LESS,

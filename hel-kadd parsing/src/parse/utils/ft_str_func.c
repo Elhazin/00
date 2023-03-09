@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ft_str_func.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-kadd <hel-kadd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abouzanb <abouzanb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 22:36:40 by hel-kadd          #+#    #+#             */
-/*   Updated: 2023/03/09 19:28:53 by hel-kadd         ###   ########.fr       */
+/*   Updated: 2023/03/10 00:17:52 by abouzanb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-
+#include "../../../include/minishell.h"
+//BY ANAS . CHECK LINE 33
 char	*ft_strchr(const char *s, int c)
 {
 	int	i;
@@ -30,8 +30,8 @@ char	*ft_strchr(const char *s, int c)
 
 size_t ft_strnlen(const char *str, size_t len)
 {
-	int i;
-
+	size_t i; // THIS MESSAGE BY ANAS . RAH BDELT "INT I" L "SIZE_T I" KAN KAYTL3 ERROR
+ 
 	i = 0;
 	while (str[i] != '\0' && i < len)
 		i++;
