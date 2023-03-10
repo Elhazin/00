@@ -6,7 +6,7 @@
 #    By: abouzanb <abouzanb@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/09 18:51:46 by hel-kadd          #+#    #+#              #
-#    Updated: 2023/03/10 21:45:59 by abouzanb         ###   ########.fr        #
+#    Updated: 2023/03/10 22:17:02 by abouzanb         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ SRCS =	./src/parse/lexer/lexer.c \
 		./src/parse/utils/ft_utils.c \
 		./src/parse/utils/ft_str_func.c \
 		main.c 
+
 
 C_RED = \033[1;31m
 C_GREEN = \033[1;32m

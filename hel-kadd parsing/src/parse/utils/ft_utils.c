@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-kadd <hel-kadd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abouzanb <abouzanb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 19:44:12 by hel-kadd          #+#    #+#             */
-/*   Updated: 2023/03/10 19:24:17 by hel-kadd         ###   ########.fr       */
+/*   Updated: 2023/03/10 22:18:15 by abouzanb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
 
-size_t	ft_strlen(const char *str)
+size_t  ft_strlen(const char *str)
 {
 	unsigned int	i;
 

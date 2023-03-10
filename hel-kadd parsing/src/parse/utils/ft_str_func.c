@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_str_func.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-kadd <hel-kadd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abouzanb <abouzanb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 22:36:40 by hel-kadd          #+#    #+#             */
-/*   Updated: 2023/03/10 17:13:40 by hel-kadd         ###   ########.fr       */
+/*   Updated: 2023/03/10 22:18:00 by abouzanb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ char	*ft_strchr(const char *s, int c)
 	return (NULL);
 }
 
-size_t ft_strnlen(const char *str, size_t len)
+size_t	ft_strnlen(const char *str, size_t len)
 {
-	size_t i; // THIS MESSAGE BY ANAS . RAH BDELT "INT I" L "SIZE_T I" KAN KAYTL3 ERROR
+	size_t	i; // THIS MESSAGE BY ANAS . RAH BDELT "INT I" L "SIZE_T I" KAN KAYTL3 ERROR
  
 	i = 0;
 	while (str[i] != '\0' && i < len)
