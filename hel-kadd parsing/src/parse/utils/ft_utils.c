@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abouzanb <abouzanb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hel-kadd <hel-kadd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 19:44:12 by hel-kadd          #+#    #+#             */
-/*   Updated: 2023/03/10 00:16:15 by abouzanb         ###   ########.fr       */
+/*   Updated: 2023/03/10 19:24:17 by hel-kadd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int is_whitespace(char c)
 
 int is_special_char(char c)
 {
-    if (ft_strchr("><|; ", c))
+    if (!ft_strchr("><|; ", c))
         return (1);
     return (0);
 }

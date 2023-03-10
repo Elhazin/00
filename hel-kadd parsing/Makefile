@@ -6,7 +6,7 @@
 #    By: hel-kadd <hel-kadd@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/09 18:51:46 by hel-kadd          #+#    #+#              #
-#    Updated: 2023/03/09 20:01:48 by hel-kadd         ###   ########.fr        #
+#    Updated: 2023/03/10 14:33:32 by hel-kadd         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,7 @@ all : $(NAME)
 
 $(NAME) : $(OBJS)
 		$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
-		@echo "$(C_GREEN)[minishell CREATED]$(C_RES)"
+		@echo "$(C_GREEN)[parsing CREATED]$(C_RES)"
 
 clean: 
 		@rm -rf $(OBJS) $(OBJSBS)
@@ -47,7 +47,7 @@ clean:
 
 fclean: clean
 		@rm -rf $(NAME)
-		@echo "$(C_RED)[pipex REMOVED]$(C_RES)"
+		@echo "$(C_RED)[parsing REMOVED]$(C_RES)"
 
 re : fclean all
 

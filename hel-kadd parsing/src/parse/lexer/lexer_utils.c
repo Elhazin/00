@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abouzanb <abouzanb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hel-kadd <hel-kadd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 19:11:40 by hel-kadd          #+#    #+#             */
-/*   Updated: 2023/03/10 00:15:25 by abouzanb         ###   ########.fr       */
+/*   Updated: 2023/03/10 15:58:08 by hel-kadd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,19 +33,28 @@ void add_token(t_token **token, int type, char *value, int len)
     ft_add_back_token(token, initialize_tokens(ft_strndup(value , len), type));
 }
 
+t_token *last_token(t_token *token)
+{
+    if (!token)
+        return (NULL);
+    while (token->next != NULL)
+        token = token->next;
+    return (token);
+}
+
+
 void ft_add_back_token(t_token **list_token, t_token *new_token)
 {
     t_token *tmp;
 
     tmp = *list_token;
-    if (!tmp)
+    if (!(*list_token))
+        (*list_token) = new_token;
+    else
     {
-        *list_token = new_token;
-        return ;
+        tmp = last_token(*list_token);
+        tmp->next = new_token;
     }
-    while (tmp->next != NULL)
-        tmp = tmp->next;
-    tmp->next = new_token;
 }
 
 // void token_skip_whitespace()

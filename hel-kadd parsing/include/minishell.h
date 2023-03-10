@@ -6,7 +6,7 @@
 /*   By: hel-kadd <hel-kadd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 20:38:24 by hel-kadd          #+#    #+#             */
-/*   Updated: 2023/03/09 19:11:06 by hel-kadd         ###   ########.fr       */
+/*   Updated: 2023/03/10 20:14:08 by hel-kadd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 #define MINISHELL_H
 
 #include <stdlib.h>
+#include <stdio.h>
 
 typedef struct s_token {
     enum {
-        TOKEN_APEND,
         TOKEN_STR,
         TOKEN_EQUALS,
         TOKEN_LESS,
@@ -35,6 +35,7 @@ typedef struct s_token {
         TOKEN_NEW_LINE,
         TOKEN_SINGLE_QUOTE,
         TOKEN_DOUBLE_QUOTE,
+        TOKEN_APEND,
     } type;
 	char *value;
 	struct s_token *next;
@@ -55,6 +56,7 @@ typedef struct s_location {
 void ft_add_back_token(t_token **list_token, t_token *new_token);
 t_token *initialize_tokens(char *value, int type);
 void add_token(t_token **token, int type,char *value, int len);
+t_token *lexer(char *input);
 //str function for help parsing tokens
 char	*ft_strchr(const char *s, int c);
 char *ft_strndup(const char *s, size_t n);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abouzanb <abouzanb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hel-kadd <hel-kadd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 19:21:09 by hel-kadd          #+#    #+#             */
-/*   Updated: 2023/03/10 00:15:09 by abouzanb         ###   ########.fr       */
+/*   Updated: 2023/03/10 20:13:17 by hel-kadd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,19 +28,22 @@ int lexer_redirection(t_token **token, int i, char *line)
     if (line[i] == '<')
     {
         if (line[i + 1] == '<')
-            add_token(token, TOKEN_HERE_DOC, line + i++, 2);
+        { 
+            add_token(token, TOKEN_HERE_DOC, line + i, 2);
+            i++;
+        }
         else
             add_token(token, TOKEN_RED_INFILE, line + i, 1);
-        i++;
     }
     else
     {
         if (line[i + 1] == '>')
+        {
             add_token(token, TOKEN_APEND, line + i, 2);
-        
+            i++;
+        }
         else 
             add_token(token, TOKEN_RED_OUTFILE, line + i, 1);
-        i++;
     }
     return (i);
 }
@@ -76,9 +79,9 @@ void lexer_last_word(t_token **token, int i, int s, char *line)
 //create function that complite the single quote
 int single_quotes(t_token **token, char *input, int i, int s)
 {
-    while (input[i] || input[i] != 39)
+    while (input[i] && input[i] != 39)
         i++;
-    add_token(token, TOKEN_STR, input + s, i - s);
+    add_token(token, TOKEN_STR, input + s, i + 1 - s);
     i++;
     return (i);
 }
@@ -94,25 +97,35 @@ t_token *lexer(char *input)
     int i;
     int s;
     int double_quotes;
+    int single_quotes;
 
+    single_quotes = 1;
     double_quotes = 1;
     i = 0;
     head = NULL;
-    while (is_whitespace(input[i]))
-        i++;
+    // while (is_whitespace(input[i]))
+    //     i++;
     s = i;
+    // printf("input %d\n", s);
     while (input[i])
     {
-        if (input[i] == 39)
-            s = single_quotes(&head, input, i++, s) + 1;
-        if (!is_charset(input[i]))
-            s = lexer_is_word(&head, input) + 1;
-        else if (input[i] == '|' || input[i] == ';')
+        // if (input[i] == 37 && !dq)
+        //     sq = 
+        // if (input[i] == 39)
+        // {
+        //     s = single_quotes(&head, input + i, i + 1 , s);
+        //     i = s;
+        // }
+        // if (!is_charset(input[i]))
+        //     s = lexer_is_word(&head, input) + 1;
+        if (input[i] == '|' || input[i] == ';')
             s = lexer_semi_pipe(&head, i, input) + 1;
-        if (input[i] == '\0' || input[i + 1] == '\n')
+        else if (input[i] == '<' || input[i] == '>')
+            s = lexer_redirection(&head, i, input) + 1;
+        else if (input[i + 1] == '\0' || input[i + 1] == '\n')
             lexer_last_word(&head, i, s, input);
         i++;
-        if (input[i] == '\n' || input[i + 1] == '\0')
+        if (input[i] == '\n' || input[i] == '\0')
             lexer_new_line(&head, i, input);
     }
     return (head);
