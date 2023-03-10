@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hel-kadd <hel-kadd@student.42.fr>          +#+  +:+       +#+         #
+#    By: abouzanb <abouzanb@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/09 18:51:46 by hel-kadd          #+#    #+#              #
-#    Updated: 2023/03/10 14:33:32 by hel-kadd         ###   ########.fr        #
+#    Updated: 2023/03/10 21:45:59 by abouzanb         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = minishell
 
 CC = @cc
 
-CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3 
 
 # AR = @ar 
 
@@ -38,7 +38,7 @@ OBJSBS = $(BONUS:.c=.o)
 all : $(NAME)
 
 $(NAME) : $(OBJS)
-		$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
+		$(CC) $(CFLAGS) $(OBJS) -lreadline -o $(NAME)
 		@echo "$(C_GREEN)[parsing CREATED]$(C_RES)"
 
 clean: 
