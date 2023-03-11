@@ -1,0 +1,10 @@
+total 16
+drwxr-xr-x   9 abouzanb  2019   306 Mar 10 22:24 .
+drwxr-xr-x  13 abouzanb  2019   442 Mar 10 21:24 ..
+-rw-r--r--   1 abouzanb  2019  1588 Mar 10 22:17 Makefile
+-rw-r--r--   1 abouzanb  2019     0 Mar 10 22:24 file.oppo
+drwxr-xr-x   3 abouzanb  2019   102 Mar 10 22:18 include
+-rw-r--r--   1 abouzanb  2019   400 Mar 10 22:18 main.c
+drwxr-xr-x   3 abouzanb  2019   102 Mar 10 21:21 src
+drwxr-xr-x  15 abouzanb  2019   510 Mar 10 22:18 test
+-rw-r--r--   1 abouzanb  2019     0 Mar 10 21:21 test.txt
