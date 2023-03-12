@@ -6,7 +6,7 @@
 /*   By: hel-kadd <hel-kadd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 20:38:24 by hel-kadd          #+#    #+#             */
-/*   Updated: 2023/03/10 20:14:08 by hel-kadd         ###   ########.fr       */
+/*   Updated: 2023/03/11 20:06:15 by hel-kadd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef struct s_token {
         TOKEN_SINGLE_QUOTE,
         TOKEN_DOUBLE_QUOTE,
         TOKEN_APEND,
+        TOKEN_DOLLAR,
     } type;
 	char *value;
 	struct s_token *next;
@@ -56,16 +57,26 @@ typedef struct s_redirection {
 	struct s_redirection *next;
 } t_redirection;
 
-typedef struct s_location {
-    int s;
-    int l;
-} t_des;
+typedef struct s_argument {
+    char *args;
+    struct s_argument *next;
+} t_args;
+
+typedef struct s_simple_command{
+    char *cmd;
+    int nbr_args;
+    int nbr_red;
+    t_redirection *red;
+    t_args *args;
+    struct s_simple_command *next;
+} t_simple_command;
 
 //token fuction
 void ft_add_back_token(t_token **list_token, t_token *new_token);
 t_token *initialize_tokens(char *value, int type);
 void add_token(t_token **token, int type,char *value, int len);
 t_token *lexer(char *input);
+int is_special_char(char c);
 //str function for help parsing tokens
 char	*ft_strchr(const char *s, int c);
 char *ft_strndup(const char *s, size_t n);
