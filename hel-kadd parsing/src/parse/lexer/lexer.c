@@ -6,7 +6,7 @@
 /*   By: hel-kadd <hel-kadd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 19:21:09 by hel-kadd          #+#    #+#             */
-/*   Updated: 2023/03/12 02:25:36 by hel-kadd         ###   ########.fr       */
+/*   Updated: 2023/03/12 02:31:12 by hel-kadd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,18 +109,14 @@ t_token *lexer(char *input)
     // printf("input %d\n", s);
     while (input[i])
     {
-        // if (input[i] == 39 && !double_quotes)
-        //     sngl_quotes = (sngl_quotes + 1) % 2;
-        // else if ((input[i] == '"' && (i == 0 || input[i - 1] != '\\')) && !sngl_quotes)
-        //     double_quotes = (double_quotes + 1) % 2;
-        // if (is_whitespace(input[i] == 0))
-        //     i++;
-        if ((input[i] >= 'a' && input[i] <= 'z') && is_charset(input[i] != 1))
+        if (input[i] == 39 && !double_quotes)
+            sngl_quotes = (sngl_quotes + 1) % 2;
+        else if ((input[i] == '"' && (i == 0 || input[i - 1] != '\\')) && !sngl_quotes)
+            double_quotes = (double_quotes + 1) % 2;
+        if ((input[i] >= 'a' && input[i] <= 'z') && is_charset(input[i] != 1) && !sngl_quotes && !double_quotes)
         {
             s = lexer_token_word(&head,input, i, s);
             i = s;
-            
-            
         }
         else if ((input[i] == '|' || input[i] == ';') && !sngl_quotes && !double_quotes)
         {
