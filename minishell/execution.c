@@ -6,7 +6,7 @@
 /*   By: abouzanb <abouzanb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 11:20:21 by abouzanb          #+#    #+#             */
-/*   Updated: 2023/03/12 17:20:11 by abouzanb         ###   ########.fr       */
+/*   Updated: 2023/03/12 19:18:07 by abouzanb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,24 @@ void ft_close(t_va *va, t_exeuction *str)
 		close(va->fd[va->k - 1][0]);
 		close(va->fd[va->k - 1][1]);
 	}
-	// if (ft_lstsize(str) == 1)
-	// {
-	// 	close(va->fd[va->k][0]);
-	// 	close(va->fd[va->k][1]);
-	// }
+	if (ft_lstsize(str) == 1)
+	{
+		close(va->fd[va->k - 1][0]);
+		close(va->fd[va->k - 1][1]);
+	}
 }
 
+void my_close(t_va *va)
+{
+	int i  = 0;
+	while (i < va->size - 1)
+	{
+		close(va->fd[i][0]);
+		close(va->fd[i][1]);
+		i++;
+	}
+	
+}
 void	ft_putstr_fd(char *s, int fd)
 {
 	int	i;
@@ -154,7 +165,6 @@ void handle_other_input(t_exeuction *str, t_va *va)
 		{
 			if (ft_lstsize(str) == va->size)
 			{
-				printf("f    %s\n", str->str);
 				close(va->fd[va->k][0]);
 			}
 			dup2(va->fd[va->k][1], 1);
@@ -165,11 +175,7 @@ void handle_other_input(t_exeuction *str, t_va *va)
 	{
 		if (ft_lstsize(str) != va->size && va->size != 1)
 		{
-			if (ft_lstsize(str) == 1)
-			{
-				printf("l    %s\n", str->str);
-				close(va->fd[va->k - 1][1]);
-			}
+			close(va->fd[va->k - 1][1]);
 			dup2(va->fd[va->k - 1][0], 0);
 			close(va->fd[va->k - 1][0]);
 		}
@@ -333,6 +339,7 @@ void execute_child(t_exeuction *str, t_va *va)
 		if (va->comd == NULL)
 			error_print(1, str->str);
 		//va->env = get_env();
+		my_close(va);
 		execve(va->comd, va->cmd, NULL);
 		perror("execve");
 	}
@@ -350,11 +357,9 @@ void creates_childs(t_exeuction *str, t_va *va)
 		if (va->id == 0)
 		{
 			execute_child(str, va);
-			ft_close(va, str);
-
 		}
-		str = str->next;
 		ft_close(va, str);
+		str = str->next;
 		(va->k)++;
 	}
 }
@@ -399,12 +404,16 @@ void execution(t_exeuction *str)
 	if (va.size == 0)
 		return ;
 	if (va.size == 1)
+	{
 		simple(str, &va);
+		wait_for_them(&va);
+	}
 	else
 	{
 		va.fd = malloc(sizeof(int *) * va.size - 1);
 		init(&va);
 		creates_childs(str, &va);
+		wait_for_them(&va);
+		my_close(&va);
 	}
-	wait_for_them(&va);
 }
