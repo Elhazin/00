@@ -6,11 +6,29 @@
 /*   By: abouzanb <abouzanb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 11:20:21 by abouzanb          #+#    #+#             */
-/*   Updated: 2023/03/05 18:40:35 by abouzanb         ###   ########.fr       */
+/*   Updated: 2023/03/12 17:20:11 by abouzanb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void ft_close(t_va *va, t_exeuction *str)
+{
+	int	i;
+
+	i = 0;
+	if (va->k != 0)
+	{
+		printf("%d\n", va->k);
+		close(va->fd[va->k - 1][0]);
+		close(va->fd[va->k - 1][1]);
+	}
+	// if (ft_lstsize(str) == 1)
+	// {
+	// 	close(va->fd[va->k][0]);
+	// 	close(va->fd[va->k][1]);
+	// }
+}
 
 void	ft_putstr_fd(char *s, int fd)
 {
@@ -65,13 +83,16 @@ void handle_here_doc(t_file *str)
 	int x;
 	int fl;
 	char *ptr;
+	fprintf(stderr, "aloha aloha\n");
 	pipe(fd);
 	x = fork();
 	if (x == 0)
 	{
 		while (1)
 		{
-			ptr = readline("> ");	
+			ptr = readline("> ");
+			if (ptr == NULL)
+				exit (1);
 			if (memcmp(str->name, ptr, ft_strlen(ptr)) == 0)
 			{
 				close(fd[1]);
@@ -131,6 +152,11 @@ void handle_other_input(t_exeuction *str, t_va *va)
 	{
 		if (ft_lstsize(str) > 1)
 		{
+			if (ft_lstsize(str) == va->size)
+			{
+				printf("f    %s\n", str->str);
+				close(va->fd[va->k][0]);
+			}
 			dup2(va->fd[va->k][1], 1);
 			close(va->fd[va->k][1]);
 		}
@@ -139,11 +165,25 @@ void handle_other_input(t_exeuction *str, t_va *va)
 	{
 		if (ft_lstsize(str) != va->size && va->size != 1)
 		{
+			if (ft_lstsize(str) == 1)
+			{
+				printf("l    %s\n", str->str);
+				close(va->fd[va->k - 1][1]);
+			}
 			dup2(va->fd[va->k - 1][0], 0);
 			close(va->fd[va->k - 1][0]);
-			close(va->fd[va->k - 1][1]);
 		}
 
+	}
+}
+
+void read_from_here_doc(t_file *file)
+{
+	while (file)
+	{
+		if (file->type == 'H')
+			handle_here_doc(file);
+		file = file->next;
 	}
 }
 void handle_redir(t_exeuction *str, t_va *va)
@@ -151,13 +191,12 @@ void handle_redir(t_exeuction *str, t_va *va)
 	t_file *file;
 
 	file = str->file;
+	read_from_here_doc(file);
 	while (file)
 	{
 		if (file->name)
 		{
-			if (file->type == 'H')
-				handle_here_doc(file);
-			else if (file->type == 'I')
+			 if (file->type == 'I')
 				handle_input(file);
 			else if (file->type == 'A')
 				handle_append(file);
@@ -246,7 +285,7 @@ int check_if_built(t_exeuction *str)
 
 void check_the_path(t_exeuction *str, t_va *av, char **path)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (path[i])
@@ -287,14 +326,12 @@ void execute_child(t_exeuction *str, t_va *va)
 	va->cmd = ft_split(str->str, ' ');
 	if (va->cmd == NULL)
 		return ;
-
 	handle_redir(str, va);
 	if (check_if_built(str) == 0)
 	{
 		get_path(str, va);
 		if (va->comd == NULL)
 			error_print(1, str->str);
-		fprintf(stderr, "ma3lima  | %s |\n", va->comd);
 		//va->env = get_env();
 		execve(va->comd, va->cmd, NULL);
 		perror("execve");
@@ -303,26 +340,28 @@ void execute_child(t_exeuction *str, t_va *va)
 
 void creates_childs(t_exeuction *str, t_va *va)
 {
-	int  k;
+	int	k;
 
-	k = 0;
+	va->k = 0;
 	va->i = 0;
 	while (str)
 	{
-
 		va->id = fork();
 		if (va->id == 0)
 		{
-			va->k = k;
 			execute_child(str, va);
+			ft_close(va, str);
+
 		}
 		str = str->next;
-		k++;
+		ft_close(va, str);
+		(va->k)++;
 	}
 }
-void simple(t_exeuction *str, t_va *av)
+
+void	simple(t_exeuction *str, t_va *av)
 {
-	av->size= 1;
+	av->size = 1;
 	av->cmd = ft_split(str->str, ' ');
 	handle_redir(str, av);
 	if (check_if_built(str) == 0)
@@ -339,19 +378,7 @@ void simple(t_exeuction *str, t_va *av)
 	}
 	ft_free(av->cmd);
 }
-void ft_close(t_va *va)
-{
-	int i;
 
-	i = 0;
-	while (i < (va->size - 1))
-	{
-		close(va->fd[i][1]);
-		close(va->fd[i][0]);
-		i++;
-	}
-	
-}
 void wait_for_them(t_va *va)
 {
 	int i;
@@ -373,12 +400,11 @@ void execution(t_exeuction *str)
 		return ;
 	if (va.size == 1)
 		simple(str, &va);
-	else 
+	else
 	{
 		va.fd = malloc(sizeof(int *) * va.size - 1);
 		init(&va);
 		creates_childs(str, &va);
-		ft_close(&va);
 	}
 	wait_for_them(&va);
 }
