@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abouzanb <abouzanb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hel-kadd <hel-kadd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 19:11:40 by hel-kadd          #+#    #+#             */
-/*   Updated: 2023/03/10 22:17:22 by abouzanb         ###   ########.fr       */
+/*   Updated: 2023/03/14 20:09:26 by hel-kadd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ t_token *initialize_tokens(char *value, int type)
     return (token);
 }
 
-void add_token(t_token **token, int type, char *value, int len)
+void add_token(t_token **token, int type, char *value, int i, int s)
 {
-    ft_add_back_token(token, initialize_tokens(ft_strndup(value , len), type));
+    ft_add_back_token(token, initialize_tokens(ft_substr(value , s, i), type));
 }
 
 t_token *last_token(t_token *token)
@@ -56,5 +56,7 @@ void ft_add_back_token(t_token **list_token, t_token *new_token)
         tmp->next = new_token;
     }
 }
+
+// int find_second_quote
 
 // void token_skip_whitespace()

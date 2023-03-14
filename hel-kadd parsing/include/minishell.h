@@ -6,7 +6,7 @@
 /*   By: hel-kadd <hel-kadd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 20:38:24 by hel-kadd          #+#    #+#             */
-/*   Updated: 2023/03/11 20:06:15 by hel-kadd         ###   ########.fr       */
+/*   Updated: 2023/03/14 20:09:55 by hel-kadd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ typedef struct s_simple_command{
 //token fuction
 void ft_add_back_token(t_token **list_token, t_token *new_token);
 t_token *initialize_tokens(char *value, int type);
-void add_token(t_token **token, int type,char *value, int len);
+void add_token(t_token **token, int type, char *value, int i, int s);
 t_token *lexer(char *input);
 int is_special_char(char c);
 //str function for help parsing tokens
@@ -82,6 +82,8 @@ char	*ft_strchr(const char *s, int c);
 char *ft_strndup(const char *s, size_t n);
 size_t	ft_strlen(const char *str);
 char	*ft_strdup(const char *src);
+char	*ft_strjoin(char const *s1, char const *s2);
+char	*ft_substr(char const *s, unsigned int start, size_t len);
 //mem function for help parsing tokens
 void	*ft_memcpy(void *dst, const void *src, size_t n);
 //utils function

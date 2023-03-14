@@ -6,7 +6,7 @@
 /*   By: hel-kadd <hel-kadd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 19:44:12 by hel-kadd          #+#    #+#             */
-/*   Updated: 2023/03/12 01:58:09 by hel-kadd         ###   ########.fr       */
+/*   Updated: 2023/03/14 20:03:23 by hel-kadd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 size_t  ft_strlen(const char *str)
 {
 	unsigned int	i;
+
 
 	i = 0;
 	while (str[i] != '\0')
@@ -61,7 +62,7 @@ int ft_redirection(t_token *token)
 
 int is_charset(char c)
 {
-    if (c == '\'' || c == '\"' || c == '<' || c == '>' || c == '|'
+    if (c == 39 || c == 34 || c == '<' || c == '>' || c == '|'
 		|| c == '$' || is_whitespace(c) || c == '\n' || c == '\0')
         return (1);
     return (0);
